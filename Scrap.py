@@ -7,7 +7,7 @@ class Scrap:
     def __init__(self, url):
         self.url = url
 
-    def request_url(self):
+    def request_url(self, params=none):
         headers = {
             "User-Agent": (
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:117.0) "
@@ -22,10 +22,30 @@ class Scrap:
 
         return soup
 
+    def scrap_content_table(self):
+
+        contents = []
+
+        rows = self.scrap_table().find_all('tr', class_='row yf-1m4mc7b')
+        for row in rows:
+            lin = {}
+            lin['company_name'] = row.find('td',{"data-testid-cell" : "companyshortname.raw"}).div.text
+            lin['price'] = float(row.find('fin-streamer', {"data-field" :"regularMarketPrice"}).text)
+            lin['change'] = float(row.find('fin-streamer', {"data-field" :"regularMarketChange"}).text)
+            lin['change_percent (%)'] = row.find('fin-streamer', {"data-field" : "regularMarketChangePercent"}).text
+            lin['volume (M)'] = float(row.find('fin-streamer',{"data-field" :"regularMarketVolume"}).text.replace('M',''))
+            lin['AVG vol(3M)'] = float(row.find('td', {"data-testid-cell": "avgdailyvol3m"}).text.replace('M',''))
+            lin['market_cap'] = row.find('fin-streamer',{"data-field" :"marketCap"}).text
+            lin['P/E_ratio(TTM)'] = row.find('td', {"data-testid-cell" : "peratio.lasttwelvemonths"}).text
+            lin['52_wk_change(%)'] = row.find('fin-streamer', {"data-field" :"fiftyTwoWeekChangePercent"}).text
+            contents.append(lin)
         
+        return contents
+
+
 
 
 # %%
 teste = Scrap('https://finance.yahoo.com/markets/stocks/most-active/')
-teste.scrap_table()
+teste.scrap_content_table()
 # %%
