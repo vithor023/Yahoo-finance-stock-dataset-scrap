@@ -1,12 +1,13 @@
+from datetime import datetime
 from bs4 import BeautifulSoup
 import requests
 
 class Scrap:
 
-    def __init__(self, url, params=none):
+    def __init__(self, url, params=None):
         self.url = url
         self.params = params
-
+        
     def request_url(self):
         headers = {
             "User-Agent": (
@@ -14,7 +15,7 @@ class Scrap:
                 "Gecko/20100101 Firefox/117.0"
             )
         }
-        return requests.get(self.url, headers=headers, params=self.params).text
+        return requests.get(self.url, headers=headers, params=self.params,).text
 
     def scrap_table(self):
 
@@ -38,6 +39,7 @@ class Scrap:
             lin['market_cap'] = row.find('fin-streamer',{"data-field" :"marketCap"}).text
             lin['P/E_ratio(TTM)'] = row.find('td', {"data-testid-cell" : "peratio.lasttwelvemonths"}).text
             lin['52_wk_change(%)'] = row.find('fin-streamer', {"data-field" :"fiftyTwoWeekChangePercent"}).text
+            lin['date'] = datetime.today().strftime('%Y-%m-%d')
             contents.append(lin)
         
         return contents
