@@ -1,20 +1,20 @@
-# %%
 from bs4 import BeautifulSoup
 import requests
 
 class Scrap:
 
-    def __init__(self, url):
+    def __init__(self, url, params=none):
         self.url = url
+        self.params = params
 
-    def request_url(self, params=none):
+    def request_url(self):
         headers = {
             "User-Agent": (
                 "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:117.0) "
                 "Gecko/20100101 Firefox/117.0"
             )
         }
-        return requests.get(self.url, headers=headers).text
+        return requests.get(self.url, headers=headers, params=self.params).text
 
     def scrap_table(self):
 
@@ -43,9 +43,3 @@ class Scrap:
         return contents
 
 
-
-
-# %%
-teste = Scrap('https://finance.yahoo.com/markets/stocks/most-active/')
-teste.scrap_content_table()
-# %%
