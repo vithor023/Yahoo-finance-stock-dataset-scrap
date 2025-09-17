@@ -27,18 +27,18 @@ class Scrap:
 
         contents = []
 
-        rows = self.scrap_table().find_all('tr', class_='row yf-1m4mc7b')
+        rows = self.scrap_table().find_all('tr', {'data-testid' :'data-table-v2-row'})
         for row in rows:
             lin = {}
             lin['company_name'] = row.find('td',{"data-testid-cell" : "companyshortname.raw"}).div.text
             lin['price'] = float(row.find('fin-streamer', {"data-field" :"regularMarketPrice"}).text)
             lin['change'] = float(row.find('fin-streamer', {"data-field" :"regularMarketChange"}).text)
-            lin['change_percent (%)'] = row.find('fin-streamer', {"data-field" : "regularMarketChangePercent"}).text
-            lin['volume (M)'] = float(row.find('fin-streamer',{"data-field" :"regularMarketVolume"}).text.replace('M',''))
-            lin['AVG vol(3M)'] = float(row.find('td', {"data-testid-cell": "avgdailyvol3m"}).text.replace('M',''))
+            lin['change_percent'] = row.find('fin-streamer', {"data-field" : "regularMarketChangePercent"}).text
+            lin['volume'] = float(row.find('fin-streamer',{"data-field" :"regularMarketVolume"}).text.replace('M',''))
+            lin['avg_volume_3m'] = float(row.find('td', {"data-testid-cell": "avgdailyvol3m"}).text.replace('M',''))
             lin['market_cap'] = row.find('fin-streamer',{"data-field" :"marketCap"}).text
-            lin['P/E_ratio(TTM)'] = row.find('td', {"data-testid-cell" : "peratio.lasttwelvemonths"}).text
-            lin['52_wk_change(%)'] = row.find('fin-streamer', {"data-field" :"fiftyTwoWeekChangePercent"}).text
+            lin['pe_ratio'] = row.find('td', {"data-testid-cell" : "peratio.lasttwelvemonths"}).text
+            lin['wk52_change'] = row.find('fin-streamer', {"data-field" :"fiftyTwoWeekChangePercent"}).text
             lin['date'] = datetime.today().strftime('%Y-%m-%d')
             contents.append(lin)
         
