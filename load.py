@@ -2,7 +2,7 @@ from Scrap import Scrap
 from sqlalchemy import create_engine
 import pandas as pd
 
-database_url = "postgresql+psycopg2://root:root@localhost:5432/yahoofinance"
+database_url = "postgresql+psycopg2://root:root@192.168.100.139:5432/yahoofinance"
 engine = create_engine(database_url)
 
 list_url = ['https://finance.yahoo.com/markets/stocks/most-active/']

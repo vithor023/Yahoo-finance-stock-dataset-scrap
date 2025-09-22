@@ -1,0 +1,5 @@
+bs4==0.0.2
+requests
+pandas==2.3.2
+psycopg2-binary==2.9.10
+SQLAlchemy==2.0.43
